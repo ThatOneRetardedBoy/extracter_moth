@@ -5,7 +5,8 @@
 #include <fstream>
 
 int main(int argc, char** argv){
-   std::ifstream fin("result.txt");
+   std::string coord = "result.txt";
+   std::ifstream fin(coord);
 
     std::string line;
     std::string linebis;
