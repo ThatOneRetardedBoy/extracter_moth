@@ -38,7 +38,13 @@ std::list<std::vector<int>> extracter(int argc, char** argv){
                         list_coord.push_back({xMin,yMin,width,height});
                         // Display diff (no more necessary)
                         //cv::imshow( "Cropped Image",  croppedImg);
-                        name = "image"+std::to_string(i)+"_"+ std::to_string(compteur_image)+".jpeg";
+                        std::stringstream ss;
+                        ss << i;
+                        std::string compteur_string = ss.str();
+                        std::stringstream ssbis;
+                        ssbis << compteur_image;
+                        std::string compteur_image_string = ss.str();
+                        name = "image"+compteur_string+"_"+ compteur_image_string+".jpeg";
                         compteur_image++;
                         cv::imwrite(name, croppedImg);
 
