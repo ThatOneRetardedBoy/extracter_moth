@@ -21,10 +21,11 @@ std::list<std::vector<int>> extracter(int argc, char** argv){
             compteurbis = 0;
             std::stringstream ss(line);
                     while(std::getline(ss,to,'\n')){
+                    std::istringstream iss (to);
                     switch(compteurbis) {
                     case 0:
                         {
-                        height = std::stoi(to);
+                        iss >> height;
                         compteurbis = 1;
 
                         // Read img
@@ -44,7 +45,7 @@ std::list<std::vector<int>> extracter(int argc, char** argv){
                         break;
                         }
                     case 1:
-                        xMin = std::stoi(to);
+                        iss >> xMin;
                         compteurbis = 0;
                         break;
                     default:
@@ -53,15 +54,16 @@ std::list<std::vector<int>> extracter(int argc, char** argv){
                     }
             }
         else {
+                std::istringstream issbis (line);
                 switch(compteur) {
                     case 0:
-                        xMin = std::stoi(line);
+                        issbis >> xMin;
                         break;
                     case 1:
-                        yMin = std::stoi(line);
+                        issbis >> yMin;
                         break;
                     case 2:
-                        width = std::stoi(line);
+                        issbis >> width;
                         break;
                     }
             }
@@ -76,5 +78,6 @@ std::list<std::vector<int>> extracter(int argc, char** argv){
 }
 int main(int argc, char** argv)
 {
+    extracter(argc, argv);
   return 0;
 }
