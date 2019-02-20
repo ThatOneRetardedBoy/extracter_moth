@@ -1,23 +1,20 @@
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <iostream>
-#include <fstream>
+#include "extracter.h"
 
-int main(int argc, char** argv){
+std::list<std::vector<int>> extracter(int argc, char** argv){
    std::string coord = argv[1];
    std::ifstream fin(coord);
 
     std::string line;
     std::string linebis;
     std::string to;
+    std::string name;
+    int xMin, width, yMin, height;
+    std::list< std::vector<int> > list_coord;
     for ( int i = 1; i <= argc; i++ ) {
     const char comma = ',';
     int compteur = 0;
     int compteurbis = 0;
     int compteur_image = 0;
-    std::string name;
-    int xMin, xMax, yMin, yMax;
     while (getline(fin, line, comma))
     {
         if(compteur == 3) {
@@ -27,7 +24,7 @@ int main(int argc, char** argv){
                     switch(compteurbis) {
                     case 0:
                         {
-                        yMax = std::stoi(to);
+                        height = std::stoi(to);
                         compteurbis = 1;
 
                         // Read img
@@ -36,8 +33,8 @@ int main(int argc, char** argv){
 
                         // This line picks out the rectangle from the image
                         // and copies to a new Mat
-                        img(cv::Rect(xMin,yMin,xMax,yMax)).copyTo(croppedImg);
-
+                        img(cv::Rect(xMin,yMin,width,height)).copyTo(croppedImg);
+                        list_coord.push_back({xMin,yMin,width,height});
                         // Display diff (no more necessary)
                         //cv::imshow( "Cropped Image",  croppedImg);
                         name = "image"+std::to_string(i)+"_"+ std::to_string(compteur_image)+".jpeg";
@@ -64,7 +61,7 @@ int main(int argc, char** argv){
                         yMin = std::stoi(line);
                         break;
                     case 2:
-                        xMax = std::stoi(line);
+                        width = std::stoi(line);
                         break;
                     }
             }
@@ -73,7 +70,11 @@ int main(int argc, char** argv){
         if(compteur == 0) {
             compteur++;
         }
-}
     }
+    }
+    return list_coord;
 }
-
+int main(int argc, char** argv)
+{
+  return 0;
+}
